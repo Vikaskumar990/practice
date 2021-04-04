@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "642676171846",
+    "project_id": "med-supply-f060d",
+    "storage_bucket": "med-supply-f060d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642676171846:android:98afea5744ef6edc8cd647",
+        "android_client_info": {
+          "package_name": "com.example.practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642676171846-4g796ehstf8skcbttkg3nhi19mb5e29e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_UHUJYqjGfuCf4-zoSXfqEtl1t-zg0jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642676171846-4g796ehstf8skcbttkg3nhi19mb5e29e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
