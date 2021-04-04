@@ -6,19 +6,21 @@ class RoundedInputMob extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final ValueChanged<String> onChanged;
+  final FormFieldValidator<String> validator;
   const RoundedInputMob({
     Key key,
     this.hintText,
     this.icon = Icons.phone,
-    this.onChanged, TextEditingController controller, String Function(value) validator,
+    this.onChanged, TextEditingController controller, this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
         onChanged: onChanged,
         cursorColor: kPrimaryColor,
+        validator: validator,
         decoration: InputDecoration(
           icon: Icon(
             icon,

@@ -29,6 +29,7 @@ class Body extends StatelessWidget {
   bool hidePass = true;
 
 
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -63,7 +64,7 @@ class Body extends StatelessWidget {
               ],),
 
             RoundedInputEmail(
-              controller: _nameTextController;
+              controller: _nameTextController,
               hintText: "Your Email",
               onChanged: (value) {},
               validator: (value) {
@@ -106,7 +107,7 @@ class Body extends StatelessWidget {
             RoundedButton(
                 text: "NEXT",
                 onPressed: () {
-                  validateForm();
+                  validateForm(context);
                   Navigator.pushNamed(context,"medSupply");
                 },
             ),
@@ -150,12 +151,12 @@ class Body extends StatelessWidget {
     );
   }
 
-  Future validateForm() {
+  validateForm(BuildContext context) async{
     FormState formState = _formKey.currentState;
 
     if (formState.validate()) {
       formState.reset();
-      FirebaseUser user = await firebaseAuth.currentUser();
+      var user =  FirebaseAuth.instance.currentUser;
       if (user == null) {
         firebaseAuth
             .createUserWithEmailAndPassword(
@@ -166,14 +167,13 @@ class Body extends StatelessWidget {
               {
                 "username": _nameTextController.text,
                 "email": _emailTextController.text,
-                "userId": retailers.uid,
+                "userId": user.user.uid,
                 "mobileNumber": _mobilenumberTextController
               }
           )
         }).catchError((err) => {print(err.toString())});
 
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Login()));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginScreen()), (route) => false);
 
       }
     }
