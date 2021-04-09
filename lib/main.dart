@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice/image_picker_example.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import './src/class_builder.dart';
 import './src/home.dart';
@@ -12,10 +13,12 @@ import 'onboarding/screen_one.dart';
 import 'signup/signup_screen.dart';
 import 'welcome/welcome_screen.dart';
 import 'constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 int initScreen;
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = await preferences.getInt('initScreen');
   initScreen = 0;
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      initialRoute: initScreen == 0 || initScreen == null ? 'welcomepage' : 'home',
+      initialRoute: initScreen == 0 || initScreen == null ? 'image_picker_example' : 'home',
       routes: {
         "welcomepage" : (context) => WelcomeScreen(),
         "login" : (context) => LoginScreen(),
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
         "medSupply" : (context) => VerificationScreen(),
         'home' : (context) => Home(),
         'onboard' : (context) => OnboardingScreenOne(),
+        'image_picker_example' :(context)=>ImagePickerExample(),
 
       },
       debugShowCheckedModeBanner: false,

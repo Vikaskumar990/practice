@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:practice/Login/login_screen.dart';
 import 'package:practice/components/email.dart';
@@ -16,19 +17,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:practice/db/retailers.dart';
 
-
 class Body extends StatelessWidget {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
   UserServices _userServices = UserServices();
   TextEditingController _nameTextController = TextEditingController();
-  TextEditingController _mobilenumberTextController = TextEditingController();
+  TextEditingController _mobileNumberTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   bool loading = false;
   bool hidePass = true;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedInputMob(
-              controller: _mobilenumberTextController,
+              controller: _mobileNumberTextController,
               hintText: "Mobile Number",
               onChanged: (value) {},
               validator: (value) {
@@ -146,37 +145,36 @@ class Body extends StatelessWidget {
 
           ],
         ),
-
       ),
     );
   }
 
-  validateForm(BuildContext context) async{
+  validateForm(BuildContext context) async {
     FormState formState = _formKey.currentState;
 
     if (formState.validate()) {
       formState.reset();
-      var user =  FirebaseAuth.instance.currentUser;
+      var user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         firebaseAuth
             .createUserWithEmailAndPassword(
-            email: _emailTextController.text,
-            password: _passwordTextController.text)
+                email: _emailTextController.text,
+                password: _passwordTextController.text)
             .then((user) => {
-          _userServices.createUser(
-              {
-                "username": _nameTextController.text,
-                "email": _emailTextController.text,
-                "userId": user.user.uid,
-                "mobileNumber": _mobilenumberTextController
-              }
-          )
-        }).catchError((err) => {print(err.toString())});
+                  _userServices.createUser({
+                    "username": _nameTextController.text,
+                    "email": _emailTextController.text,
+                    "userId": user.user.uid,
+                    "mobileNumber": _mobileNumberTextController
+                  })
+                })
+            .catchError((err) => {print(err.toString())});
 
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginScreen()), (route) => false);
-
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false);
       }
     }
-
   }
 }
